@@ -1,1 +1,1 @@
-We learnt how to make player movement using rigidbody.
+This lesson we refined the code, cleaned up movement(using rigidbody) and used raycast to do ground check, we also made it so the camera follows the player without rotating, also camera no longer needs to be attatched to player
