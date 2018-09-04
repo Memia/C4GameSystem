@@ -7,6 +7,8 @@ using UnityEngine.AI;
 public class WaypointEnemy : MonoBehaviour
 
 {
+    Bullet bullet;
+    public float health = 100f;
     public Transform waypointParent;
     public NavMeshAgent agent;
     public float stoppingDistance = 1f;
@@ -15,8 +17,8 @@ public class WaypointEnemy : MonoBehaviour
     public Transform target;  //for seeking
     public float seekRadius = 5f;
     public enum State  //decleration
-        
-    { 
+
+    {
         Patrol, Seek
     }
 
@@ -59,6 +61,7 @@ public class WaypointEnemy : MonoBehaviour
     {
         //Getting children of waypointParent
         waypoints = waypointParent.GetComponentsInChildren<Transform>();
+
     }
 
 
@@ -76,11 +79,20 @@ public class WaypointEnemy : MonoBehaviour
             default:
                 break;
         }
-         //switch current state
-         //If we are in Patrol
-         // Call patrol()
-         //if  we are in seek
-         //Call Seek()
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
 
+        //switch current state
+        //If we are in Patrol
+        // Call patrol()
+        //if  we are in seek
+        //Call Seek()
+
+    }
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
     }
 }
