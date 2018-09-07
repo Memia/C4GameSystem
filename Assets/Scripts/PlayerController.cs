@@ -42,8 +42,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentWeapon.coolDown > 0)
+        {
+            currentWeapon.coolDown -= Time.deltaTime;
+        }
         if (Input.GetButton("Fire1"))
-
+            if (currentWeapon.coolDown <=0)
         {
             currentWeapon.Attack();
         }

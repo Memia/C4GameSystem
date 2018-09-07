@@ -8,13 +8,19 @@ public abstract class Weapon : MonoBehaviour
     public int ammo;
     public float accuracy;
     public float range;
-    public float rateOfFier;
+    [Range(0f, 1f)]
+    public float rateOfFire;
+    [HideInInspector]
+    public float coolDown;
     public GameObject projectile;
     public Transform spawnPoint;
     protected int currentAmmo;
 
     // Use this for initialization
-
+    private void Start()
+    {
+       coolDown = 1 - rateOfFire;
+    }
 
     // Update is called once per frame
 
