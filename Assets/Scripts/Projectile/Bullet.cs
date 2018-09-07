@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Projectile
 {
     public int damage = 50;
     public float speed = 5f;
@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter(Collider other)
     {
-
+ 
         //Get the enemy component from it
         WaypointEnemy Enemy = other.GetComponent<WaypointEnemy>();
         // If it is indeed an enemy
@@ -28,6 +28,6 @@ public class Bullet : MonoBehaviour
             //Destroy the bullet
             Destroy(gameObject);
         }
-        Destroy(gameObject, .5f);
+        Destroy(gameObject,2.5f);
     }
 }

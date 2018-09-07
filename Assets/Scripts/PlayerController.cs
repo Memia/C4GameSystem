@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 10f;
     public float rayDistance = 1f;
     public bool rotateToMainCamera = false;
+    public Weapon currentWeapon;
+
   
 
     private void OnDrawGizmos()
@@ -40,6 +42,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButton("Fire1"))
+
+        {
+            currentWeapon.Attack();
+        }
         //Check if W key is perssed
         //moveforward
         #region If statement movement
@@ -67,7 +74,7 @@ public class PlayerController : MonoBehaviour
         }
         */
         #endregion
-                            //GetAxisRaw snaps the numnber
+        //GetAxisRaw snaps the numnber
         float inputH = Input.GetAxis("Horizontal") *moveSpeed;
         float inputV = Input.GetAxis("Vertical") *moveSpeed;
                                             //this makes y 0 and creates a problem when you fall.
