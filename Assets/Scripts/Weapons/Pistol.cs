@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-   // public GameObject bullet;
+    // public GameObject bullet;
     public KeyCode fireButton;
-
-
-
-
-
 
     override public void Attack()
     {
 
-            // Instantiate a new bullet from prefab "bullet"
-            GameObject clone = Instantiate(projectile, spawnPoint.position, spawnPoint.rotation);
-            //Get the component from the new bullet
-            Bullet newBullet = clone.GetComponent<Bullet>();
-            //Tell the bullet to fire()
-            newBullet.Fire(transform.forward);
-            coolDown = 1 - rateOfFire;
+        // Instantiate a new bullet from prefab "bullet"
+        GameObject clone = Instantiate(projectile, spawnPoint.position, spawnPoint.rotation);
+        //Get the component from the new bullet
+        Fire newBullet = clone.GetComponent<Fire>();
+        ////Tell the bullet to fire()
+        newBullet.Travel(transform.forward);
+
+        coolDown = 1 - rateOfFire;
 
 
 

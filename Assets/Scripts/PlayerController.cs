@@ -12,14 +12,14 @@ public class PlayerController : MonoBehaviour
     public bool rotateToMainCamera = false;
     public Weapon currentWeapon;
 
-  
+
 
     private void OnDrawGizmos()
     {                           //the position where the script is attatched
-        Ray groundRay = new Ray(transform.position,Vector3.down);
+        Ray groundRay = new Ray(transform.position, Vector3.down);
         //from groundRay.origin  to  groundRay.origin + groundRay.direction * rayDistance
         Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(groundRay.origin, groundRay.origin + groundRay.direction * rayDistance); 
+        Gizmos.DrawLine(groundRay.origin, groundRay.origin + groundRay.direction * rayDistance);
     }
 
     // Use this for initialization
@@ -38,19 +38,31 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
-
-    // Update is called once per frame
-    void Update()
+    bool CanFire()
     {
+        //if the cooldown is more than zero, perform cooldown.
         if (currentWeapon.coolDown > 0)
         {
             currentWeapon.coolDown -= Time.deltaTime;
+            return (false);
         }
-        if (Input.GetButton("Fire1"))
-            if (currentWeapon.coolDown <=0)
+        else
         {
-            currentWeapon.Attack();
+            return (true);
         }
+
+
+
+    }
+    // Update is called once per frame
+    void Update()
+    {
+
+        if (Input.GetButton("Fire1"))
+            if (CanFire())
+            {
+                currentWeapon.Attack();
+            }
         //Check if W key is perssed
         //moveforward
         #region If statement movement
@@ -79,9 +91,9 @@ public class PlayerController : MonoBehaviour
         */
         #endregion
         //GetAxisRaw snaps the numnber
-        float inputH = Input.GetAxis("Horizontal") *moveSpeed;
-        float inputV = Input.GetAxis("Vertical") *moveSpeed;
-                                            //this makes y 0 and creates a problem when you fall.
+        float inputH = Input.GetAxis("Horizontal") * moveSpeed;
+        float inputV = Input.GetAxis("Vertical") * moveSpeed;
+        //this makes y 0 and creates a problem when you fall.
         Vector3 moveDir = new Vector3(inputH, 0f, inputV);
         Vector3 camEuler = Camera.main.transform.eulerAngles;
         // Is the controller rotating to camera?
@@ -92,7 +104,7 @@ public class PlayerController : MonoBehaviour
             moveDir = Quaternion.AngleAxis(camEuler.y, Vector3.up) * moveDir;
         }
         Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
-        if (Input.GetButton/*uses bool*/("Jump")&& IsGrounded(/*the brackets make sure they are ercognised as a function*/))
+        if (Input.GetButton/*uses bool*/("Jump") && IsGrounded(/*the brackets make sure they are ercognised as a function*/))
         {
             force.y = jumpHeight;
         }

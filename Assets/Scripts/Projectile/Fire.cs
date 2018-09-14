@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Fire : Projectile
 {
-    public int damage = 50;
-    public float speed = 5f;
-    public Rigidbody rigid;
-    public ParticleSystem particles;
+
 
     // Use this for initialization
-    public void Fire(Vector3 direction)
-    { 
-        //Add a force in the given 'direction' variable and use impulse
-        rigid.AddForce(direction * speed, ForceMode.Impulse);
-    }
-
-    // Update is called once per frame
-    void OnTriggerEnter(Collider other)
+    void Start()
     {
- 
-        //Get the enemy component from it
+
+    }
+    public override void Travel(Vector3 direction)
+    {
+        //Add a force in the given 'direction' variable and use impulse
+        rigid.AddForce(direction * bulletSpeed, ForceMode.Impulse);
+    }
+    public override void OnTriggerEnter(Collider other)
+    {
         WaypointEnemy Enemy = other.GetComponent<WaypointEnemy>();
         // If it is indeed an enemy
         if (Enemy)
@@ -31,6 +28,11 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
         Destroy(gameObject);
-        Instantiate(particles);
+        Instantiate(particles, transform.position, transform.rotation);
+    }
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }
