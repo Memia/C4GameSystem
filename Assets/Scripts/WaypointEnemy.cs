@@ -112,4 +112,7 @@ public class WaypointEnemy : MonoBehaviour
         health -= damage;
         StartCoroutine(Hit());
     }
+
+    // Freeze IEnumerator
+    // Public function that Freezes object
 }

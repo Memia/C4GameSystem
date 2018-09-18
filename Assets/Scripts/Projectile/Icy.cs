@@ -4,59 +4,57 @@ using UnityEngine;
 
 public class Icy : Fire
 {
-    public float slowDown = 0.5f;
-    public float timer = 3f;
-    public float intialTimer;
+    [Header("SlowDownProperty")]
+    public float frozeness;
+    public float frozenTime = 2f;
     public bool frozen = false;
-   public WaypointEnemy enemy;
+
+
+    public float initialSpeed;
+
+    private WaypointEnemy enemy;
 
     // Use this for initialization
     void Start()
     {
         Destroy(gameObject, .3f);
         Instantiate(particles, transform.position, transform.rotation);
-        intialTimer = timer;
-       enemy = enemy.GetComponent<WaypointEnemy>();
+        initialSpeed = enemy.agent.speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (frozen)
-        {
-            timer -= Time.deltaTime;
-        }
-        if (timer <= 0)
-        {
-            frozen = false;
-        }
+
     }
 
     public override void OnTriggerEnter(Collider other)
     {
-       // WaypointEnemy enemy = other.GetComponent<WaypointEnemy>();
+        // Tell the enemy that they're frozen and by a certain value
+
+        enemy = other.GetComponent<WaypointEnemy>();
         // If it is indeed an enemy
         if (enemy)
         {
-
-            frozen = true;
             enemy.TakeDamage(damage);
-         
+            frozeness += 0.1f;
+
+        }
+        if (frozeness >= 2f)
+        {
+            StartCoroutine("Freeze");
         }
     }
-    void Freeze()
-    {
-        if (frozen = true)
-        {
-            timer = intialTimer;
-            enemy.agent.speed = slowDown;
-        }
 
-        if (frozen = false)
-        {
-            Debug.Log("sad");
-            enemy.agent.speed = enemy.initialSpeed;
-        }
+    IEnumerator Freeze()
+    {
+
+        frozen = true;
+        enemy.agent.speed = 0;
+        yield return new WaitForSeconds(frozenTime);
+        frozen = false;
+        enemy.agent.speed = initialSpeed;
+        frozeness = 0;
     }
 
 }

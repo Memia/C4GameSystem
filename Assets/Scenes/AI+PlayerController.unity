@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.24420941, g: 0.22141221, b: 0.16608557, a: 1}
+  m_IndirectSpecularColor: {r: 0.24420935, g: 0.22141224, b: 0.16608572, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -664,10 +664,10 @@ MonoBehaviour:
   particles: {fileID: 198354289125460002, guid: ebe269a6a7abc8241b74511d74f073cc,
     type: 2}
   rigid: {fileID: 488924887}
-  slowDown: 0.5
-  timer: 3
-  intialTimer: 0
+  frozeness: 0
+  frozenTime: 2
   frozen: 0
+  initialSpeed: 0
   enemy: {fileID: 817006478}
 --- !u!54 &488924887
 Rigidbody:
