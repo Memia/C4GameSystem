@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
     public Transform weapon;
     public float moveSpeed;
     public Rigidbody rigid;
@@ -22,11 +23,8 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(groundRay.origin, groundRay.origin + groundRay.direction * rayDistance);
     }
 
-    // Use this for initialization
-    void Start()
-    {
 
-    }
+
     bool IsGrounded()
     {
         Ray groundRay = new Ray(transform.position, Vector3.down);
@@ -46,6 +44,14 @@ public class PlayerController : MonoBehaviour
             currentWeapon.coolDown -= Time.deltaTime;
             return (false);
         }
+        if (currentWeapon.currentAmmo <= 0)
+        {
+
+            currentWeapon.reloading = true;
+            return (false);
+        }
+
+
         else
         {
             return (true);
@@ -63,6 +69,12 @@ public class PlayerController : MonoBehaviour
             {
                 currentWeapon.Attack();
             }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            currentWeapon.reloading = true;
+        }
+        //Check if you can fire
+        CanFire();
         //Check if W key is perssed
         //moveforward
         #region If statement movement

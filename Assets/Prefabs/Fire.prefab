@@ -112,12 +112,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a6a3530c8840d748a6443fe6e12cfae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 40
-  speed: 5
+  damage: 5
   bulletSpeed: 20
-  particles: {fileID: 198457462734370946, guid: 6828a162965580747bcef1164f68fc9f,
+  particles: {fileID: 198571473725083130, guid: c6520b02996961b4ea7a4f5e16394be5,
     type: 2}
   rigid: {fileID: 54330498380299302}
+  timer: 5
 --- !u!136 &136976829430770616
 CapsuleCollider:
   m_ObjectHideFlags: 1

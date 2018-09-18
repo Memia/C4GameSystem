@@ -4,8 +4,11 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    public int damage;
-    public int ammo;
+
+    public int ammo = 25;
+    public float reloadTime = 2.5f;
+    // [HideInInspector]
+    public int currentAmmo;
     public float accuracy;
     public float range;
     [Range(0f, 1f)]
@@ -14,21 +17,51 @@ public abstract class Weapon : MonoBehaviour
     public float coolDown;
     public GameObject projectile;
     public Transform spawnPoint;
-    protected int currentAmmo;
+    public bool reloading;
+
 
     // Use this for initialization
     private void Start()
     {
-       coolDown = 1 - rateOfFire;
+        coolDown = 1 - rateOfFire;
+        currentAmmo = ammo;
     }
 
     // Update is called once per frame
 
     abstract public void Attack();
-    
+    private void Update()
+    {
+        if (reloading)
+        {
+            reloadTime -= Time.deltaTime;
+            if (reloadTime <= 0)
+            {
+                reloading = false;
+                Reload();
+            }
+        }
+       
+    }
+
     public void Reload()
     {
-        //Resert currentAmmo
         currentAmmo = ammo;
+        reloadTime = 2.5f;
     }
+    //if (reloadTime > 0)
+    //{
+    //    reloading = true;
+    //    reloadTime -= Time.deltaTime;
+    //}
+    //if (reloadTime <= 0)
+    //{
+    //    Resert currentAmmo
+    //   currentAmmo = ammo;
+    //  reloadTime = 2.5f;
+    //    reloading = false;
 }
+
+
+
+

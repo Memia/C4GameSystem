@@ -16,7 +16,7 @@ public class Pistol : Weapon
         Fire newBullet = clone.GetComponent<Fire>();
         ////Tell the bullet to fire()
         newBullet.Travel(transform.forward);
-
+        currentAmmo--;
         coolDown = 1 - rateOfFire;
 
 

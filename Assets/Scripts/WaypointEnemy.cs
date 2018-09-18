@@ -16,7 +16,15 @@ public class WaypointEnemy : MonoBehaviour
     private int currentIndex = 1;
     public Transform target;  //for seeking
     public float seekRadius = 5f;
+    public Renderer rend;
+    public Color hitColor = Color.red;
+    private Color originalColor;
+    private float hitDelay = 0.2f;
+    [HideInInspector]
+    public float initialSpeed;
     public enum State  //decleration
+       
+        
 
     {
         Patrol, Seek
@@ -61,12 +69,14 @@ public class WaypointEnemy : MonoBehaviour
     {
         //Getting children of waypointParent
         waypoints = waypointParent.GetComponentsInChildren<Transform>();
-
+        originalColor = rend.material.color;
+        initialSpeed = agent.speed;
     }
 
 
     void Update()
     {
+        initialSpeed = agent.speed;
         switch (currentState)
         {
             case State.Patrol:
@@ -91,8 +101,15 @@ public class WaypointEnemy : MonoBehaviour
         //Call Seek()
 
     }
+    IEnumerator Hit()
+    {
+        rend.material.color = hitColor;
+        yield return new WaitForSeconds(hitDelay);
+        rend.material.color = originalColor;
+    }
     public void TakeDamage(int damage)
     {
         health -= damage;
+        StartCoroutine(Hit());
     }
 }

@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1038911695452002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.832, z: 9.638}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.70153, y: 0.19270115, z: 0.29352}
   m_Children: []
   m_Father: {fileID: 0}
@@ -113,9 +113,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  bulletSpeed: 5
-  particles: {fileID: 198457462734370946, guid: 6828a162965580747bcef1164f68fc9f,
+  bulletSpeed: 20
+  particles: {fileID: 198354289125460002, guid: ebe269a6a7abc8241b74511d74f073cc,
     type: 2}
+  rigid: {fileID: 54571384126114586}
+  slowDown: 0.5
+  timer: 3
+  intialTimer: 0
+  frozen: 0
+  enemy: {fileID: 114972328798117890, guid: 6e84eeb3a32745842b9ed64822e399a7, type: 2}
 --- !u!136 &136534580789337324
 CapsuleCollider:
   m_ObjectHideFlags: 1
