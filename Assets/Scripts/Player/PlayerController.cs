@@ -11,10 +11,23 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 10f;
     public float rayDistance = 1f;
     public bool rotateToMainCamera = false;
-    public Weapon currentWeapon;
-
-
-
+    private Weapon currentWeapon;
+    public Weapon[] weapons;
+    private Vector3 moveDir;
+    private bool isJumping;
+    private Interactable interactObject;
+    private void Start()
+    {
+       // currentWeapon = 
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        interactObject = other.GetComponent<Interactable>();
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        interactObject = null;
+    }
     private void OnDrawGizmos()
     {                           //the position where the script is attatched
         Ray groundRay = new Ray(transform.position, Vector3.down);
@@ -23,7 +36,15 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(groundRay.origin, groundRay.origin + groundRay.direction * rayDistance);
     }
 
-
+    public void Interact()
+    {
+        //If interactable is found
+        if(interactObject)
+        {
+            //Run interact
+            interactObject.Interact();
+        }
+    }
 
     bool IsGrounded()
     {
@@ -60,6 +81,28 @@ public class PlayerController : MonoBehaviour
 
 
     }
+    public void SelectWeapon(int index)
+    {
+        //Check index is within range of weapons array
+        if (index < 0 || index >= weapons.Length)
+            return;
+        //Disable all weapons
+        DisableAllWeapons();
+        //Enable weapon at index
+        weapons[index].gameObject.SetActive(true);
+        //Set the current weapon
+        currentWeapon = weapons[index];
+
+    }
+    private void DisableAllWeapons()
+    {
+        //Loop through every weapon
+        foreach (Weapon weapon in weapons)
+        {
+            //Deactivate weapon's GameObject
+            weapon.gameObject.SetActive(false);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -67,7 +110,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButton("Fire1"))
             if (CanFire())
             {
-                currentWeapon.Attack();
+                Attack();
             }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -103,10 +146,9 @@ public class PlayerController : MonoBehaviour
         */
         #endregion
         //GetAxisRaw snaps the numnber
-        float inputH = Input.GetAxis("Horizontal") * moveSpeed;
-        float inputV = Input.GetAxis("Vertical") * moveSpeed;
+
         //this makes y 0 and creates a problem when you fall.
-        Vector3 moveDir = new Vector3(inputH, 0f, inputV);
+       
         Vector3 camEuler = Camera.main.transform.eulerAngles;
         // Is the controller rotating to camera?
         if (rotateToMainCamera)
@@ -116,9 +158,14 @@ public class PlayerController : MonoBehaviour
             moveDir = Quaternion.AngleAxis(camEuler.y, Vector3.up) * moveDir;
         }
         Vector3 force = new Vector3(moveDir.x, rigid.velocity.y, moveDir.z);
-        if (Input.GetButton/*uses bool*/("Jump") && IsGrounded(/*the brackets make sure they are ercognised as a function*/))
+        if(isJumping && IsGrounded())
         {
             force.y = jumpHeight;
+            isJumping = false;
+        }
+        if (Input.GetButton/*uses bool*/("Jump") && IsGrounded(/*the brackets make sure they are ercognised as a function*/))
+        {
+          
         }
 
         //velocity equals to movedire.x,y,z times movement speed, it creates a problem for y axis because gravity gets involved
@@ -134,13 +181,17 @@ public class PlayerController : MonoBehaviour
         weapon.localRotation = weaponRotation;
         transform.rotation = playerRotation;
     }
-
-    /* OnCollisionEnter is called when this collider/rigidbody has begun touching another rigidbody/collider
-    private void OnCollisionEnter(Collision collision)
+    public void Move(float inputH, float inputV)
     {
-        if(collision.collider.name == "Ground")
-        {
-            isGrounded = true;
-        }
-    }*/
+        moveDir = new Vector3(inputH, 0f, inputV);
+        moveDir *= moveSpeed;
+    }
+   public void Attack()
+    {
+        currentWeapon.Attack();
+    }
+    public void Jump()
+    {
+
+    }
 }

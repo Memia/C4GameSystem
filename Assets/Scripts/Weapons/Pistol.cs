@@ -19,7 +19,5 @@ public class Pistol : Weapon
         currentAmmo--;
         coolDown = 1 - rateOfFire;
 
-
-
     }
 }
